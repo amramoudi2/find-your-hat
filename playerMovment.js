@@ -1,77 +1,143 @@
-const {getPos} = require("./getPlayerPos")
-
-const testArr = [
-    ["*","░","░","O"],
-    ["O","░","O","░"],
-    ["O","░","░","░"],
-    ["░","O","^","░"]
-]
-
+function print(arr){
+    arr.forEach(y => {
+        console.log(y.join(" "))
+    })
+}
 
 function toRight(currentPos,arr){
-    const currentRaw = arr[currentPos.x]
+    const currentRaw = arr[currentPos.y]
 
-    if(currentRaw[currentPos.y + 1] === "^"){
-        currentRaw[currentPos.y + 1] = "*"
-        currentRaw[currentPos.y] = "░"    
-        console.log(arr);
+    console.clear()
+
+    if(currentRaw[currentPos.x + 1] === "^"){
+        currentRaw[currentPos.x + 1] = "*"
+        currentRaw[currentPos.x] = "░"    
+        print(arr)
         
-        
-        process.stdout.write("you won")
+        process.stdout.write("you won: you found your hat")
         process.exit()
     }
 
-    if(currentRaw[currentPos.y + 1] === "O"){
-        currentRaw[currentPos.y + 1] = "0"
-        currentRaw[currentPos.y] = "░"
-        console.log(arr);
+    if(currentRaw[currentPos.x + 1] === "O"){
+        currentRaw[currentPos.x + 1] = "0"
+        currentRaw[currentPos.x] = "░"
+        print(arr)
         
-        process.stdout.write("you fell in a hole")
+        process.stdout.write("you lost: you feel in a hole")
         process.exit()
     }
 
-    if(!currentRaw[currentPos.y + 1]){
-        currentRaw[currentPos.y] = "░"
-        console.log(arr);
+    if(!currentRaw[currentPos.x + 1]){
+        currentRaw[currentPos.x] = "░"
+        print(arr)
 
-        process.stdout.write("out of map")
+        process.stdout.write("you lost: out of map")
         process.exit()
     }
 
-    currentRaw[currentPos.y] = "░"
-    currentRaw[currentPos.y + 1] = "*"
+    currentRaw[currentPos.x] = "░"
+    currentRaw[currentPos.x + 1] = "*"
 
     return arr
 }
 
 function toLeft(currentPos,arr){
-    const currentRaw = arr[currentPos.x]
+    const currentRaw = arr[currentPos.y]
 
-    if(currentRaw[currentPos.y - 1] === "^"){
-        currentRaw[currentPos.y - 1] = "*"
-        currentRaw[currentPos.y] = "░" 
-        console.log(arr);
-        process.stdout.write("you won")
+    console.clear()
+
+    if(currentRaw[currentPos.x - 1] === "^"){
+        currentRaw[currentPos.x - 1] = "*"
+        currentRaw[currentPos.x] = "░" 
+        print(arr)
+        process.stdout.write("you won!: you found your hat")
         process.exit()
     }
 
-    if(currentRaw[currentPos.y - 1] === "O"){
-        currentRaw[currentPos.y - 1] = "0"
-        currentRaw[currentPos.y] = "░"
-        console.log(arr);
-        process.stdout.write("you fell in a hole")
+    if(currentRaw[currentPos.x - 1] === "O"){
+        currentRaw[currentPos.x - 1] = "0"
+        currentRaw[currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: you feel in a hole")
         process.exit()
     }
 
-    if(!currentRaw[currentPos.y - 1]){
-        currentRaw[currentPos.y] = "░"
-        console.log(arr);
-        process.stdout.write("out of map")
+    if(!currentRaw[currentPos.x - 1]){
+        currentRaw[currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: out of map")
         process.exit()
     }
 
-    currentRaw[currentPos.y] = "░"
-    currentRaw[currentPos.y - 1] = "*"
+    currentRaw[currentPos.x] = "░"
+    currentRaw[currentPos.x - 1] = "*"
+
+    return arr
+}
+
+function toUp(currentPos,arr){
+
+    console.clear()
+    
+    
+    if(arr[currentPos.y - 1][currentPos.x] === "^"){
+        arr[currentPos.y - 1][currentPos.x] = "*"
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you won!: you found your hat")
+        process.exit()
+    }
+    
+    if(arr[currentPos.y - 1][currentPos.x] === "O"){
+        arr[currentPos.y - 1][currentPos.x] = "0"
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: you feel in a hole")
+        process.exit()
+    }
+    
+    if(!arr[currentPos.y - 1]){
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: out of map")
+        process.exit()
+    }
+
+    arr[currentPos.y - 1][currentPos.x] = "*"
+    arr[currentPos.y][currentPos.x] = "░"
+
+    return arr
+}
+
+function toDown(currentPos,arr){
+
+    console.clear()
+
+    if(arr[currentPos.y + 1][currentPos.x] === "^"){
+        arr[currentPos.y + 1][currentPos.x] = "*"
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you won!: you found your hat")
+        process.exit()
+    }
+
+    if(arr[currentPos.y + 1][currentPos.x] === "O"){
+        arr[currentPos.y + 1][currentPos.x] = "0"
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: you feel in a hole")
+        process.exit()
+    }
+
+    if(!arr[currentPos.y + 1]){
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: out of map")
+        process.exit()
+    }
+
+    arr[currentPos.y + 1][currentPos.x] = "*"
+    arr[currentPos.y][currentPos.x] = "░"
 
     return arr
 }
@@ -79,3 +145,5 @@ function toLeft(currentPos,arr){
 
 module.exports.toRight = toRight
 module.exports.toLeft = toLeft
+module.exports.toUp = toUp
+module.exports.toDown = toDown

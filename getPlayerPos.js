@@ -4,8 +4,8 @@ function getPos(arr){
         const getY = arr[i].indexOf("*")
         if(getY !== -1){
             return f = {
-                x : i,
-                y : getY
+                y : i,
+                x : getY
             }
         }
     }

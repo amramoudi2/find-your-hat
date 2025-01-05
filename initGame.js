@@ -9,7 +9,8 @@ function addRow(w,isPlayer,isLastPositon){
 
     currentArr.forEach(x => {
         if(isLastPositon && !hatAdded){
-            currentArr[Math.floor(Math.random() * w)] = "^"
+            currentArr[Math.floor(Math.random() * w)] = "^"     
+
             hatAdded = true
             maxNumOfHols--
         }else{
@@ -24,7 +25,17 @@ function addRow(w,isPlayer,isLastPositon){
     })
 
     if(!isPlayer){
-        currentArr[Math.floor(Math.random() * w)] = "*"
+        const getRandomPlayerSpawn = Math.floor(Math.random() * w)
+
+        if(currentArr[getRandomPlayerSpawn] === "^"){
+            if(currentArr[getRandomPlayerSpawn + 1]){
+                currentArr[getRandomPlayerSpawn + 1] = "*"
+            }else{
+                currentArr[getRandomPlayerSpawn - 1] = "*"
+            }
+        }else{
+            currentArr[getRandomPlayerSpawn] = "*"
+        }
     }
 
     return currentArr
@@ -33,9 +44,11 @@ function addRow(w,isPlayer,isLastPositon){
 function initGame(h,w){
     const fullGame = []
 
+    const getRandomHight = Math.floor(Math.random() * h + 1)
+
     for(let i = 0; i < h; i++){
         const isPlayer = fullGame.length > 0 ? true : false
-        fullGame.push(addRow(w,isPlayer, i + 1 === h ? true : false))
+        fullGame.push(addRow(w,isPlayer, i + 1 === getRandomHight ? true : false))
     }
 
     return fullGame

@@ -1,31 +1,53 @@
-const prompt = require('prompt-sync')({sigint: true});
 const {initGame} = require("./initGame")
 const {getPos} = require("./getPlayerPos")
-const {toLeft,toRight} = require("./playerMovment")
-
+const {toLeft,toRight,toDown,toUp} = require("./playerMovment")
+const {getUserInput} = require("./userInput")
 class Field {
-    constructor(){
-        this._filed = []
+    constructor(field){
+        this._field = field
     }
 
-    generateField(h,w){
-        this._filed = initGame(h,w)
+    static generateField(h,w){
+        return initGame(h,w)
     }
 
     getPlayPos(){
-        console.log(getPos(this._filed))
+        return getPos(this._field)
     }
 
-    print(){
-        this._filed.forEach(x => {
-            console.log(x.join(" "))
+    goRight(){                
+        toRight(this.getPlayPos(),this._field)
+    }
+
+    goLeft(){
+        toLeft(this.getPlayPos(),this._field)
+    }
+
+    goUp(){
+        toUp(this.getPlayPos(),this._field)
+    }
+
+    goDown(){
+        toDown(this.getPlayPos(),this._field)
+    }
+
+    static print(arr){
+        arr.forEach(y => {
+            console.log(y.join(" "))
         })
     }
 }
 
+// to start the game
+const randomWidth = Math.floor(Math.random() * (10 - 5)) + 4;
+const randomHight = Math.floor(Math.random() * (10 - 5)) + 7;
 
-const myFiled = new Field()
+const generatedField = Field.generateField(randomHight,randomWidth)
+const myField = new Field(generatedField)
+console.clear()
 
-myFiled.generateField(4,4)
-myFiled.print()
-myFiled.getPlayPos()
+Field.print(generatedField)
+
+getUserInput(generatedField,myField,Field)
+
+module.exports.Field = Field;
