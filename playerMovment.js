@@ -23,7 +23,7 @@ function toRight(currentPos,arr){
         currentRaw[currentPos.x] = "░"
         print(arr)
         
-        process.stdout.write("you lost: you feel in a hole")
+        process.stdout.write("you lost: you fell in a hole")
         process.exit()
     }
 
@@ -58,7 +58,7 @@ function toLeft(currentPos,arr){
         currentRaw[currentPos.x - 1] = "0"
         currentRaw[currentPos.x] = "░"
         print(arr)
-        process.stdout.write("you lost: you feel in a hole")
+        process.stdout.write("you lost: you fell in a hole")
         process.exit()
     }
 
@@ -80,6 +80,13 @@ function toUp(currentPos,arr){
     console.clear()
     
     
+    if(!arr[currentPos.y - 1]){
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: out of map")
+        process.exit()
+    }
+    
     if(arr[currentPos.y - 1][currentPos.x] === "^"){
         arr[currentPos.y - 1][currentPos.x] = "*"
         arr[currentPos.y][currentPos.x] = "░"
@@ -92,14 +99,7 @@ function toUp(currentPos,arr){
         arr[currentPos.y - 1][currentPos.x] = "0"
         arr[currentPos.y][currentPos.x] = "░"
         print(arr)
-        process.stdout.write("you lost: you feel in a hole")
-        process.exit()
-    }
-    
-    if(!arr[currentPos.y - 1]){
-        arr[currentPos.y][currentPos.x] = "░"
-        print(arr)
-        process.stdout.write("you lost: out of map")
+        process.stdout.write("you lost: you fell in a hole")
         process.exit()
     }
 
@@ -110,9 +110,16 @@ function toUp(currentPos,arr){
 }
 
 function toDown(currentPos,arr){
-
+    
     console.clear()
-
+    
+    if(!arr[currentPos.y + 1]){
+        arr[currentPos.y][currentPos.x] = "░"
+        print(arr)
+        process.stdout.write("you lost: out of map")
+        process.exit()
+    }
+    
     if(arr[currentPos.y + 1][currentPos.x] === "^"){
         arr[currentPos.y + 1][currentPos.x] = "*"
         arr[currentPos.y][currentPos.x] = "░"
@@ -125,16 +132,10 @@ function toDown(currentPos,arr){
         arr[currentPos.y + 1][currentPos.x] = "0"
         arr[currentPos.y][currentPos.x] = "░"
         print(arr)
-        process.stdout.write("you lost: you feel in a hole")
+        process.stdout.write("you lost: you fell in a hole")
         process.exit()
     }
 
-    if(!arr[currentPos.y + 1]){
-        arr[currentPos.y][currentPos.x] = "░"
-        print(arr)
-        process.stdout.write("you lost: out of map")
-        process.exit()
-    }
 
     arr[currentPos.y + 1][currentPos.x] = "*"
     arr[currentPos.y][currentPos.x] = "░"
